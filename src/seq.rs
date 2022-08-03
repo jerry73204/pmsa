@@ -1,5 +1,6 @@
 use std::cmp::{Ordering, Ordering::*};
 
+/// Sequentially merges two sorted slices.
 pub fn seq_merge<T, E>(lslice: &[T], rslice: &[T], tgt: &mut E)
 where
     T: Clone + Ord,
@@ -8,6 +9,7 @@ where
     seq_merge_by(lslice, rslice, tgt, |lhs, rhs| lhs.cmp(rhs))
 }
 
+/// Sequentially merges two sorted slices with a custom key function.
 pub fn seq_merge_by_key<T, E, K, F>(lslice: &[T], rslice: &[T], tgt: &mut E, key: F)
 where
     T: Clone,
@@ -18,6 +20,7 @@ where
     seq_merge_by(lslice, rslice, tgt, |lhs, rhs| key(lhs).cmp(&key(rhs)))
 }
 
+/// Sequentially merges two sorted slices with a custom comparison function.
 pub fn seq_merge_by<T, E, F>(mut lslice: &[T], mut rslice: &[T], tgt: &mut E, compare: F)
 where
     T: Clone,

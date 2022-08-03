@@ -9,6 +9,7 @@ use crate::{
     },
 };
 
+/// Merges two sorted slices in parallel.
 pub fn par_merge<T>(lslice: &[T], rslice: &[T]) -> Vec<T>
 where
     T: Clone + Ord + Sync + Send,
@@ -16,6 +17,7 @@ where
     par_merge_by(lslice, rslice, |lhs, rhs| lhs.cmp(rhs))
 }
 
+/// Merges two sorted slices in parallel with a custom key function.
 pub fn par_merge_by_key<T, K, F>(lslice: &[T], rslice: &[T], key: F) -> Vec<T>
 where
     T: Clone + Sync + Send,
@@ -25,6 +27,7 @@ where
     par_merge_by(lslice, rslice, |lhs, rhs| key(lhs).cmp(&key(rhs)))
 }
 
+/// Merges two sorted slices in parallel with a custom comparison function.
 pub fn par_merge_by<'a, T, F>(mut lslice: &'a [T], mut rslice: &'a [T], compare: F) -> Vec<T>
 where
     T: Clone + Sync + Send,
