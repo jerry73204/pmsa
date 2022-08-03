@@ -1,7 +1,7 @@
 use anyhow::Result;
 use clap::Parser;
 use itertools::chain;
-use par_merge_sorted_array::{par_merge, seq_merge};
+use pmsa::{par_merge, seq_merge};
 use rand::prelude::*;
 use rayon::prelude::*;
 use std::time::Instant;
