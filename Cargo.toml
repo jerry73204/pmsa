@@ -2,7 +2,7 @@
 name = "pmsa"
 version = "0.1.0"
 edition = "2021"
-description = "Parallel Mergeing of two Sorted Array"
+description = "Parallel Mergeing of two Sorted Arrays"
 categories = ["algorithms"]
 documentation = "https://docs.rs/pmsa/"
 repository = "https://github.com/jerry73204/pmsa.git"
