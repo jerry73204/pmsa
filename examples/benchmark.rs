@@ -51,7 +51,7 @@ fn main() -> Result<()> {
     Ok(())
 }
 
-fn generate_sorted_vec(len: usize) -> Vec<usize> {
+fn generate_sorted_vec(len: usize) -> Vec<u64> {
     let incs: Vec<_> = (0..len)
         .into_par_iter()
         .map_init(rand::thread_rng, |rng, _| rng.gen_range(0..=8))
@@ -69,7 +69,7 @@ fn generate_sorted_vec(len: usize) -> Vec<usize> {
     values
 }
 
-fn check(llist: &[usize], rlist: &[usize], tgt: &[usize]) {
+fn check(llist: &[u64], rlist: &[u64], tgt: &[u64]) {
     let mut values: Vec<_> = chain!(llist, rlist).cloned().collect();
     values.par_sort_unstable();
     assert_eq!(values, tgt);
