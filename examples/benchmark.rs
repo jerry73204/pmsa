@@ -9,27 +9,43 @@ use std::time::Instant;
 #[derive(Parser)]
 struct Opts {
     pub num_values: usize,
+    #[clap(long)]
+    pub par_only: bool,
+    #[clap(long)]
+    pub seq_only: bool,
+    #[clap(long)]
+    pub no_check: bool,
 }
 
 fn main() -> Result<()> {
     let opts = Opts::parse();
+    assert!(
+        !(opts.par_only && opts.seq_only),
+        "--par-only and --seq-only cannot be specified in the mean time"
+    );
 
     let llist = generate_sorted_vec(opts.num_values);
     let rlist = generate_sorted_vec(opts.num_values);
 
-    {
+    if !opts.par_only {
         let mut tgt = Vec::with_capacity(llist.len() + rlist.len());
         let since = Instant::now();
         seq_merge(&llist, &rlist, &mut tgt);
         println!("seq {:?}", since.elapsed());
-        check(&llist, &rlist, &tgt);
+
+        if !opts.no_check {
+            check(&llist, &rlist, &tgt);
+        }
     }
 
-    {
+    if !opts.seq_only {
         let since = Instant::now();
         let tgt = par_merge(&llist, &rlist);
         println!("par {:?}", since.elapsed());
-        check(&llist, &rlist, &tgt);
+
+        if !opts.no_check {
+            check(&llist, &rlist, &tgt);
+        }
     }
 
     Ok(())
